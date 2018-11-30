@@ -1,0 +1,1 @@
+shopsnap-mobile
