@@ -141,7 +141,10 @@ class CustomCamera extends React.Component {
       return <Text>No access to camera</Text>;
     } else {
       return (
-        <View style={{ flex: 1 }}>
+        <View style={{ position: 'relative', flex: 1 }}>
+            <View style={{flexDirection:'column', flex: 3}}>
+
+            </View>
           <Camera
             ref={ref => {
               this.camera = ref;
@@ -151,6 +154,8 @@ class CustomCamera extends React.Component {
           >
             <View
               style={{
+                  position: 'absolute',
+                  bottom: 0,
                 flex: 1,
                 backgroundColor: "transparent",
                 flexDirection: "row"
