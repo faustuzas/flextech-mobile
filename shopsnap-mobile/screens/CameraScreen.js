@@ -1,4 +1,5 @@
 import React from "react";
+import { ActivityIndicator } from "react-native";
 import NotificationPopup from "react-native-push-notification-popup";
 
 import { withNavigationFocus } from "react-navigation";
@@ -28,14 +29,26 @@ import {
   BarCodeScanner,
   Notifications
 } from "expo";
-import { Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Title, Button, Text } from "native-base";
-import {CameraLayover} from "../components/CameraLayover";
-
+import {
+  Container,
+  Card,
+  CardItem,
+  Body,
+  Content,
+  Header,
+  Left,
+  Right,
+  Icon,
+  Title,
+  Button,
+  Text
+} from "native-base";
+import { CameraLayover } from "../components/CameraLayover";
 
 class CameraScreen extends React.Component {
-    static navigationOptions = {
-        header: null
-    }
+  static navigationOptions = {
+    header: null
+  };
 
   render() {
     return <CustomCamera isScreenFocused={this.props.isFocused} />;
@@ -46,6 +59,7 @@ class CustomCamera extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
+    isSendingReceipt: false
   };
 
   async componentDidMount() {
@@ -56,6 +70,7 @@ class CustomCamera extends React.Component {
   }
 
   processPicture = picture => {
+    this.setState({ isSendingReceipt: true });
     fetch("https://epicentertop.azurewebsites.net/api", {
       method: "POST",
       headers: {
@@ -64,14 +79,15 @@ class CustomCamera extends React.Component {
       body: JSON.stringify(picture.base64)
     })
       .then(
-        response =>
-          new Promise(function(resolve, reject) {
-            console.log(response);
-          }),
+        response => undefined,
         ex => {
-            this.showErrorPopup(String(ex));
+          this.showErrorPopup(String(ex));
         }
-      );
+      )
+      .finally(() => {
+        this.showPopup("OPA");
+        this.setState({ isSendingReceipt: false });
+      });
   };
 
   showPopup = message => {
@@ -96,14 +112,17 @@ class CustomCamera extends React.Component {
 
   takePicture = () => {
     console.log("takePicture()");
+    this.camera.pausePreview();
     this.camera
       .takePictureAsync({
         base64: true,
         quality: 0,
-        onPictureSaved: picture => this.processPicture(picture)
+        onPictureSaved: picture => {
+          this.camera.resumePreview();
+          this.processPicture(picture);
+        }
       })
       .catch(error => {
-        // TODO: only show error popup when a lot of takePicture() end up there
         this.showErrorPopup(String(error));
       });
     this.setState({
@@ -112,27 +131,39 @@ class CustomCamera extends React.Component {
   };
 
   onFilmButton = () => {
-    const { isFilming } = this.state;
-    if (this.camera && !isFilming) this.takePicture();
-    this.setState({ isFilming: !isFilming });
+    if (this.camera) this.takePicture();
   };
 
-  renderBottomBar = () => (
-    <View style={styles.bottomBar}>
-      <View style={{ flex: 1 }}>
-        <TouchableOpacity
-          onPress={this.onFilmButton}
-          style={{ alignSelf: "center" }}
-        >
-          <Ionicons
-            name="ios-radio-button-on"
-            size={70}
-            color="white"
-          />
-        </TouchableOpacity>
+  renderBottomBar = () => {
+    if (this.state.isSendingReceipt) {
+      return (
+        <View style={styles.bottomBar}>
+          <View style={{ flex: 1 }}>
+            <ActivityIndicator
+              style={{     flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 20 }}
+              size="large"
+              color="white"
+            />
+          </View>
+        </View>
+      );
+    }
+    
+    return (
+      <View style={styles.bottomBar}>
+        <View style={{ flex: 1 }}>
+          <TouchableOpacity
+            onPress={this.onFilmButton}
+            style={{ alignSelf: "center" }}
+          >
+            <Ionicons name="ios-radio-button-on" size={70} color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   render() {
     const { hasCameraPermission } = this.state;
@@ -142,13 +173,14 @@ class CustomCamera extends React.Component {
       return <Text>No access to camera</Text>;
     } else {
       return (
-        <View style={{ position: 'relative', flex: 1 }}>
+        <View style={{ position: "relative", flex: 1 }}>
           <Camera
             ref={ref => {
               this.camera = ref;
             }}
             style={styles.camera}
-            type={this.state.type}>
+            type={this.state.type}
+          >
             <CameraLayover />
             <View style={styles.bottomBarContainer}>
               {this.renderBottomBar()}
@@ -162,37 +194,37 @@ class CustomCamera extends React.Component {
 }
 
 const styles = {
-    bottomButton: {
-      marginBottom: 0,
-      flex: 0.3,
-      height: 58,
-      justifyContent: "center",
-      alignSelf: "center",
-      alignItems: "center"
-    },
+  bottomButton: {
+    marginBottom: 0,
+    flex: 0.3,
+    height: 58,
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center"
+  },
 
-    bottomBar: {
-      paddingBottom: 5,
-      backgroundColor: "transparent",
-      alignSelf: "flex-end",
-      justifyContent: "space-between",
-      flex: 1,
-      flexDirection: "row"
-    },
+  bottomBar: {
+    paddingBottom: 5,
+    backgroundColor: "transparent",
+    alignSelf: "flex-end",
+    justifyContent: "space-between",
+    flex: 1,
+    flexDirection: "row"
+  },
 
-    camera: {
-      flex: 1,
-      position: 'relative'
-    },
+  camera: {
+    flex: 1,
+    position: "relative"
+  },
 
-    bottomBarContainer: {
-      position: 'absolute',
-      bottom: 0,
-      flex: 1,
-      zIndex: 5,
-      backgroundColor: "transparent",
-      flexDirection: "row"
-    }
-  };
+  bottomBarContainer: {
+    position: "absolute",
+    bottom: 0,
+    flex: 1,
+    zIndex: 5,
+    backgroundColor: "transparent",
+    flexDirection: "row"
+  }
+};
 
 export default withNavigationFocus(CameraScreen);
