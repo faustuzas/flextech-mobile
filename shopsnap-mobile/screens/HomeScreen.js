@@ -12,7 +12,7 @@ export default class HomeScreen extends Component {
     return (
       <View style={styles.rootContainer}>
         <ReceiptList />
-        <NewReceiptIcon callb={this.props.navigation}/>
+        <NewReceiptIcon navigation={this.props.navigation}/>
       </View>
     );
   }

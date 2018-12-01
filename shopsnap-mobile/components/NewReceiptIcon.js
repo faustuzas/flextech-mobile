@@ -8,7 +8,7 @@ import Ripple from "react-native-material-ripple";
 
 const CameraIcon = props => (
   <Ripple rippleColor="white" rippleContainerBorderRadius={25}  rippleOpacity={0.6}
-  onPress={() => props.callb.navigate('Camera')}>
+  onPress={() => props.navigation.navigate('Camera')}>
     <View style={styles.cameraIconBackground}>
       <Ionicons name={Platform.OS === 'ios' ? 'ios-camera' : "md-camera"} size={Platform.OS === 'ios' ? 44 : 34} color="#FFF8EB" />
     </View>
@@ -17,7 +17,7 @@ const CameraIcon = props => (
 
 export const NewReceiptIcon = props => (
   <View style={styles.cameraIconContainer}>
-    <CameraIcon callb={props.callb} />
+    <CameraIcon navigation={props.navigation} />
   </View>
 );
 
