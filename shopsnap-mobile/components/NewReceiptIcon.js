@@ -6,17 +6,18 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import Ripple from "react-native-material-ripple";
 
-const CameraIcon = () => (
-  <Ripple rippleColor="white" rippleContainerBorderRadius={25}  rippleOpacity={0.6}>
+const CameraIcon = props => (
+  <Ripple rippleColor="white" rippleContainerBorderRadius={25}  rippleOpacity={0.6}
+  onPress={() => props.callb.navigate('Camera')}>
     <View style={styles.cameraIconBackground}>
       <Ionicons name={Platform.OS === 'ios' ? 'ios-camera' : "md-camera"} size={Platform.OS === 'ios' ? 44 : 34} color="#FFF8EB" />
     </View>
   </Ripple>
 );
 
-export const NewReceiptIcon = () => (
+export const NewReceiptIcon = props => (
   <View style={styles.cameraIconContainer}>
-    <CameraIcon />
+    <CameraIcon callb={props.callb} />
   </View>
 );
 
