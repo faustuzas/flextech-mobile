@@ -93,7 +93,7 @@ class CustomCamera extends React.Component {
   showPopup = message => {
     this.popup.show({
       appIconSource: require("../assets/images/robot-dev.jpg"),
-      appTitle: "Epicenter",
+      appTitle: "Shopsnap",
       timeText: "Now",
       title: "You've found something!",
       body: message
@@ -103,7 +103,7 @@ class CustomCamera extends React.Component {
   showErrorPopup = message => {
     this.popup.show({
       appIconSource: require("../assets/images/robot-dev.jpg"),
-      appTitle: "Epicenter",
+      appTitle: "Shopsnap",
       timeText: "Now",
       title: "Error!",
       body: message
