@@ -19,9 +19,9 @@ export default class ReceiptList extends Component {
       <Container>
         <Content>
           <List>
-            <SingleReceipt uri={maxima} date="2018-12-01" price={3.5} />
-            <SingleReceipt uri={norfa} date="2018-11-21" price={0.99} />
-            <SingleReceipt uri={lidl} date="2018-10-05" price={16.69} />
+            <SingleReceipt navigation={this.props.navigation} uri={maxima} date="2018-12-01" price={3.5} />
+            <SingleReceipt navigation={this.props.navigation} uri={norfa} date="2018-11-21" price={0.99} />
+            <SingleReceipt navigation={this.props.navigation} uri={lidl} date="2018-10-05" price={16.69} />
           </List>
         </Content>
       </Container>

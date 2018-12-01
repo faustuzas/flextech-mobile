@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { View } from "react-native";
+import Ripple from "react-native-material-ripple";
 
 import {
   Container,
@@ -16,7 +17,9 @@ import {
 } from "native-base";
 
 const SingleReceipt = props => (
-  <ListItem thumbnail>
+  <Ripple rippleColor="gray" rippleContainerBorderRadius={1}  rippleOpacity={0.3}
+  onPress={() => props.navigation.navigate('Receipt')}>
+  <ListItem thumbnail >
     <Left>
       <Thumbnail
         square
@@ -32,11 +35,12 @@ const SingleReceipt = props => (
       </Text>
     </Body>
     <Right>
-      <Button>
+      <Button onPress={() => props.navigation.navigate('Receipt')}>
         <Text>View</Text>
       </Button>
     </Right>
   </ListItem>
+  </Ripple>
 );
 
 export default SingleReceipt;

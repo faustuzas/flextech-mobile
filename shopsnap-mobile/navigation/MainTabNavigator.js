@@ -8,6 +8,7 @@ import {
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import CameraScreen from "../screens/CameraScreen";
+import ReceiptScreen from "../screens/ReceiptScreen";
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen
@@ -21,7 +22,12 @@ const CameraStack = createStackNavigator({
   Camera: CameraScreen
 });
 
+const ReceiptStack = createStackNavigator({
+  Receipt: ReceiptScreen
+});
+
 export default createStackNavigator({
   HomeStack,
   CameraStack,
+  ReceiptStack
 });
