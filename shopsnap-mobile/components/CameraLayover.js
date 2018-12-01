@@ -8,7 +8,16 @@ export const CameraLayover = () => (
 
     <View style={styles.middleView}>
       <View style={styles.middleViewSide} />
-      <View style={styles.middleViewMiddle} />
+      <View style={styles.middleViewMiddle}>
+        <View style={styles.middleViewCornersContainer}>
+          <View style={{ ...styles.corner, ...styles.cornerTop, ...styles.cornerLeft }} />
+          <View style={{ ...styles.corner, ...styles.cornerTop, ...styles.cornerRight  }} />
+        </View>
+        <View style={ styles.middleViewCornersContainer}>
+          <View style={{ ...styles.corner, ...styles.cornerBottom, ...styles.cornerLeft }} />
+          <View style={{ ...styles.corner, ...styles.cornerBottom, ...styles.cornerRight }} />
+        </View>
+      </View>
       <View style={styles.middleViewSide} />
     </View>
 
@@ -42,6 +51,42 @@ const styles = {
   },
 
   middleViewMiddle: {
-    flex: 5
+    flex: 5,
+    justifyContent: 'space-between'
+  },
+
+  middleViewCornersContainer: {
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
+  corner: {
+    height: 50,
+    width: 50
+  },
+
+  cornerTop: {
+    borderTopWidth: 2,
+    borderColor: 'white',
+    borderStyle: 'solid'
+  },
+
+  cornerLeft: {
+    borderLeftWidth: 2,
+    borderColor: 'white',
+    borderStyle: 'solid'
+  },
+
+  cornerBottom: {
+    borderBottomWidth: 2,
+    borderColor: 'white',
+    borderStyle: 'solid'
+  },
+
+  cornerRight: {
+    borderRightWidth: 2,
+    borderColor: 'white',
+    borderStyle: 'solid'
   }
 };
