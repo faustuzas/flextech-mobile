@@ -14,6 +14,7 @@
     "@expo/samples": "2.1.1",
     "@expo/vector-icons": "latest",
     "expo": "^31.0.2",
+    "native-base": "^2.8.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-material-ripple": "^0.8.0",
