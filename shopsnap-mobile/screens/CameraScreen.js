@@ -29,6 +29,7 @@ import {
   BarCodeScanner,
   Notifications
 } from "expo";
+import {CameraLayover} from "../components/CameraLayover";
 
 
 class CameraScreen extends React.Component {
@@ -142,25 +143,14 @@ class CustomCamera extends React.Component {
     } else {
       return (
         <View style={{ position: 'relative', flex: 1 }}>
-            <View style={{flexDirection:'column', flex: 3}}>
-
-            </View>
           <Camera
             ref={ref => {
               this.camera = ref;
             }}
-            style={{ flex: 1 }}
-            type={this.state.type}
-          >
-            <View
-              style={{
-                  position: 'absolute',
-                  bottom: 0,
-                flex: 1,
-                backgroundColor: "transparent",
-                flexDirection: "row"
-              }}
-            >
+            style={styles.camera}
+            type={this.state.type}>
+            <CameraLayover />
+            <View style={styles.bottomBarContainer}>
               {this.renderBottomBar()}
             </View>
           </Camera>
@@ -171,12 +161,7 @@ class CustomCamera extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingTop: 15,
-      backgroundColor: "#fff"
-    },
+const styles = {
     bottomButton: {
       marginBottom: 0,
       flex: 0.3,
@@ -185,6 +170,7 @@ const styles = StyleSheet.create({
       alignSelf: "center",
       alignItems: "center"
     },
+
     bottomBar: {
       paddingBottom: 5,
       backgroundColor: "transparent",
@@ -192,7 +178,21 @@ const styles = StyleSheet.create({
       justifyContent: "space-between",
       flex: 1,
       flexDirection: "row"
+    },
+
+    camera: {
+      flex: 1,
+      position: 'relative'
+    },
+
+    bottomBarContainer: {
+      position: 'absolute',
+      bottom: 0,
+      flex: 1,
+      zIndex: 5,
+      backgroundColor: "transparent",
+      flexDirection: "row"
     }
-  });
+  };
 
 export default withNavigationFocus(CameraScreen);
