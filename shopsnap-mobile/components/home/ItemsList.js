@@ -19,9 +19,9 @@ export default class ItemsList extends Component {
       <Container>
         <Content>
           <List>
-            <SingleItem uri={maxima} date="2018-12-01" />
-            <SingleItem uri={norfa} date="2018-11-21" />
-            <SingleItem uri={lidl} date="2018-10-05" />
+            <SingleItem uri={maxima} date="2018-12-01" price={3.5} />
+            <SingleItem uri={norfa} date="2018-11-21" price={0.99} />
+            <SingleItem uri={lidl} date="2018-10-05" price={16.69} />
           </List>
         </Content>
       </Container>

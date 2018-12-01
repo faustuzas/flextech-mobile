@@ -28,7 +28,7 @@ const singleItem = props => (
     <Body>
       <Text>{props.date}</Text>
       <Text note numberOfLines={1}>
-        Potatoes, bananas, apples, beer...
+        {`${props.price}$`}
       </Text>
     </Body>
     <Right>
