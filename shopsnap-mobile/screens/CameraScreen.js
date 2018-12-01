@@ -142,9 +142,6 @@ class CustomCamera extends React.Component {
     } else {
       return (
         <View style={{ position: 'relative', flex: 1 }}>
-            <View style={{flexDirection:'column', flex: 3}}>
-
-            </View>
           <Camera
             ref={ref => {
               this.camera = ref;
