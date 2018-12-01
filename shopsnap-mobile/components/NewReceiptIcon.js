@@ -14,16 +14,6 @@ const CameraIcon = () => (
   </Ripple>
 );
 
-function GetNativeCameraButton() {
-  return (
-    <Ripple rippleColor="white" rippleDuration={0.8}>
-      <View style={styles.cameraIconBackground}>
-        <Ionicons name="md-camera" size={34} color="#FFF8EB" />
-      </View>
-    </Ripple>
-  );
-}
-
 export const NewReceiptIcon = () => (
   <View style={styles.cameraIconContainer}>
     <CameraIcon />
