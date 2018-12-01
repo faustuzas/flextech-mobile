@@ -6,7 +6,6 @@ import { withNavigationFocus } from "react-navigation";
 import {
   Alert,
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   Slider,
@@ -29,13 +28,14 @@ import {
   BarCodeScanner,
   Notifications
 } from "expo";
+import { Container, Card, CardItem, Body, Content, Header, Left, Right, Icon, Title, Button, Text } from "native-base";
 import {CameraLayover} from "../components/CameraLayover";
 
 
 class CameraScreen extends React.Component {
-  static navigationOptions = {
-    header: null
-  };
+    static navigationOptions = {
+        header: null
+    }
 
   render() {
     return <CustomCamera isScreenFocused={this.props.isFocused} />;

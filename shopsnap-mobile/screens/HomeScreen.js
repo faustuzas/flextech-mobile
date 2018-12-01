@@ -7,10 +7,6 @@ export default class HomeScreen extends Component {
     header: null,
   };
 
-  componentDidMount() {
-    console.log(this.props.navigation);
-  }
-
   render() {
     return (
       <View style={styles.rootContainer}>
