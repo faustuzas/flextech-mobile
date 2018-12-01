@@ -15,7 +15,7 @@ import {
   Button
 } from "native-base";
 
-const singleItem = props => (
+const SingleReceipt = props => (
   <ListItem thumbnail>
     <Left>
       <Thumbnail
@@ -32,11 +32,11 @@ const singleItem = props => (
       </Text>
     </Body>
     <Right>
-      <Button transparent>
+      <Button>
         <Text>View</Text>
       </Button>
     </Right>
   </ListItem>
 );
 
-export default singleItem;
+export default SingleReceipt;

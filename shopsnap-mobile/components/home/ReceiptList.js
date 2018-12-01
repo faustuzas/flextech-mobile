@@ -3,7 +3,7 @@ import { View } from "react-native";
 
 import { Container, Content, List } from "native-base";
 
-import SingleItem from "./SingleItem";
+import SingleReceipt from "./SingleReceipt";
 
 const maxima = "https://www.maxima.lt/images/front/logos/maxima_logo.png";
 const norfa =
@@ -13,15 +13,15 @@ const rimi =
 const iki = "https://upload.wikimedia.org/wikipedia/commons/f/f1/IKI_logo.png";
 const lidl = "https://upload.wikimedia.org/wikipedia/lt/7/77/Logo_LIDL_JPEG.jpg";
 
-export default class ItemsList extends Component {
+export default class ReceiptList extends Component {
   render() {
     return (
       <Container>
         <Content>
           <List>
-            <SingleItem uri={maxima} date="2018-12-01" price={3.5} />
-            <SingleItem uri={norfa} date="2018-11-21" price={0.99} />
-            <SingleItem uri={lidl} date="2018-10-05" price={16.69} />
+            <SingleReceipt uri={maxima} date="2018-12-01" price={3.5} />
+            <SingleReceipt uri={norfa} date="2018-11-21" price={0.99} />
+            <SingleReceipt uri={lidl} date="2018-10-05" price={16.69} />
           </List>
         </Content>
       </Container>

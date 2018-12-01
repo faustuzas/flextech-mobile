@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import {NewReceiptIcon} from "../components/NewReceiptIcon";
-import ItemsList from '../components/home/ItemsList';
+import ReceiptList from '../components/home/ReceiptList';
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
@@ -11,7 +11,7 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.rootContainer}>
-        <ItemsList />
+        <ReceiptList />
         <NewReceiptIcon callb={this.props.navigation}/>
       </View>
     );
