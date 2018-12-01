@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Ripple from "react-native-material-ripple";
 
 const CameraIcon = () => (
-  <Ripple rippleColor="white">
+  <Ripple rippleColor="white" rippleContainerBorderRadius={25}  rippleOpacity={0.6}>
     <View style={styles.cameraIconBackground}>
       <Ionicons name={Platform.OS === 'ios' ? 'ios-camera' : "md-camera"} size={Platform.OS === 'ios' ? 44 : 34} color="#FFF8EB" />
     </View>
