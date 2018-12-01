@@ -8,10 +8,30 @@ export default class HomeScreen extends Component {
     header: null,
   };
 
+  state = {
+    receiptList: []
+  }
+
+  componentDidMount() {
+    fetch("https://shopsnapwebapi.azurewebsites.net/api/receipt/?userID=1", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(
+        response => response.json(),
+        ex => {
+          //this.showErrorPopup(String(ex));
+        }
+      )
+      .then((jsonResponse) => this.setState({receiptList: jsonResponse}));
+  }
+
   render() {
     return (
       <View style={styles.rootContainer}>
-        <ReceiptList navigation={this.props.navigation} />
+        <ReceiptList navigation={this.props.navigation} itemList={this.state.receiptList} />
         <NewReceiptIcon navigation={this.props.navigation}/>
       </View>
     );

@@ -81,13 +81,10 @@ class CustomCamera extends React.Component {
       .then(
         response => undefined,
         ex => {
-          this.showErrorPopup(String(ex));
+          console.log("catch in processPicture after fetch");
+          //this.showErrorPopup(String(ex));
         }
-      )
-      .finally(() => {
-        this.showPopup("OPA");
-        this.setState({ isSendingReceipt: false });
-      });
+      );
   };
 
   showPopup = message => {
@@ -112,17 +109,16 @@ class CustomCamera extends React.Component {
 
   takePicture = () => {
     console.log("takePicture()");
-    this.camera.pausePreview();
     this.camera
       .takePictureAsync({
         base64: true,
         quality: 0,
         onPictureSaved: picture => {
-          this.camera.resumePreview();
           this.processPicture(picture);
         }
       })
       .catch(error => {
+        console.log("takepicture catch");
         this.showErrorPopup(String(error));
       });
     this.setState({

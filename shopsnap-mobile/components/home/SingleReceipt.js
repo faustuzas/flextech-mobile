@@ -17,8 +17,8 @@ import {
 } from "native-base";
 
 const SingleReceipt = props => (
-  <Ripple rippleColor="gray" rippleContainerBorderRadius={1}  rippleOpacity={0.3}
-  onPress={() => props.navigation.navigate('Receipt')}>
+  <Ripple rippleColor="gray" rippleContainerBorderRadius={1} rippleOpacity={0.3}
+  onPress={() => props.navigation.navigate('Receipt', {receiptItems: props.receipt.receiptItems})}>
   <ListItem thumbnail >
     <Left>
       <Thumbnail
@@ -31,11 +31,11 @@ const SingleReceipt = props => (
     <Body>
       <Text>{props.date}</Text>
       <Text note numberOfLines={1}>
-        {`${props.price}$`}
+        {`${props.price}€`}
       </Text>
     </Body>
     <Right>
-      <Button onPress={() => props.navigation.navigate('Receipt')}>
+      <Button onPress={() => props.navigation.navigate('Receipt', {receiptItems: props.receipt.receiptItems})}>
         <Text>View</Text>
       </Button>
     </Right>
