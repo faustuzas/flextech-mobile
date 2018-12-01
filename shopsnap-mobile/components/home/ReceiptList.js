@@ -23,7 +23,8 @@ const getReceiptPriceSum = receipt => {
 };
 
 const GetRows = props => {
-  return props.itemList.map(receipt => (
+  return props.itemList.map(receipt => { 
+    return (
     <SingleReceipt
       key={receipt.ID}
       navigation={props.navigation}
@@ -32,7 +33,8 @@ const GetRows = props => {
       price={getReceiptPriceSum(receipt)}
       receipt={receipt}
     />
-  ));
+    );
+  });
 };
 
 const getPriceSum = receiptList => {

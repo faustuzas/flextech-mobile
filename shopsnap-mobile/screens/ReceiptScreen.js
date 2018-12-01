@@ -8,6 +8,8 @@ export default class ReceiptScreen extends React.Component {
   };
 
   render() {
+    const { navigation } = this.props;
+    const receiptItems = navigation.getParam('receiptItems', []);
     return (
       <Container>
         <Content>
