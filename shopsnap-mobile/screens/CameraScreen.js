@@ -79,7 +79,6 @@ class CustomCamera extends React.Component {
       ReceiptFoundItemList: this.state.itemsRead
     });
 
-    console.log(data);
     fetch("https://shopsnapwebapi.azurewebsites.net/api/receipt/create", {
       method: "POST",
       headers: {

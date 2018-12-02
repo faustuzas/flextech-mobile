@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { NewReceiptIcon } from "../components/NewReceiptIcon";
 import ReceiptList from "../components/home/ReceiptList";
 import { ActivityIndicator } from "react-native";
@@ -11,7 +11,8 @@ export default class HomeScreen extends Component {
 
   state = {
     receiptList: [],
-    isFetchingReceipts: true
+    isFetchingReceipts: true,
+    totalSpent: 0
   };
 
   componentDidFocus = payload => {
@@ -29,11 +30,17 @@ export default class HomeScreen extends Component {
         },
         ex => {
           this.setState({ isFetchingReceipts: false });
-          console.log("receipt fetch fail");
-          //this.showErrorPopup(String(ex));
         }
       )
-      .then(jsonResponse => this.setState({ receiptList: jsonResponse }));
+      .then(jsonResponse => {
+        let spent = 0;
+
+        jsonResponse.forEach(receipt => {
+          receipt.ReceiptItems.forEach(item => spent += item.Price)
+        });
+
+        this.setState({ receiptList: jsonResponse, totalSpent: spent })
+      });
   };
 
   componentDidMount() {
@@ -70,6 +77,11 @@ export default class HomeScreen extends Component {
           itemList={this.state.receiptList}
         />
         <NewReceiptIcon navigation={this.props.navigation} />
+        <View style={styles.helpContainer}>
+          <TouchableOpacity style={styles.helpLink}>
+            <Text style={styles.helpLinkText}>Viso: {this.state.totalSpent.toFixed(2)} €</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -89,5 +101,16 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-around",
     padding: 10
-  }
+  },
+  helpContainer: {
+    marginTop: 5,
+    alignItems: 'center',
+  },
+  helpLink: {
+    paddingVertical: 15,
+  },
+  helpLinkText: {
+    fontSize: 14,
+    color: '#2e78b7',
+  },
 };
