@@ -41,7 +41,9 @@ import {
   Icon,
   Title,
   Button,
-  Text
+  Text,
+  Picker,
+  Form
 } from "native-base";
 import { CameraLayover } from "../components/CameraLayover";
 
@@ -59,8 +61,15 @@ class CustomCamera extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
-    isSendingReceipt: false
+    isSendingReceipt: false,
+    selectedStore: ""
   };
+
+  onValueChange(value) {
+    this.setState({
+      selectedStore: value
+    });
+  }
 
   async componentDidMount() {
     const { permissions } = await Permissions.askAsync(Permissions.CAMERA);
@@ -69,14 +78,21 @@ class CustomCamera extends React.Component {
     });
   }
 
-  processPicture = picture => {
+  processPicture = async picture => {
     this.setState({ isSendingReceipt: true });
+    const saveOptions = {
+      compress: 0.7,
+      format: 'jpeg',
+      base64: true
+    };
+    const img = await Expo.ImageManipulator.manipulateAsync(picture.uri, [], saveOptions);
+    console.log(img.base64.length);
     fetch("https://shopsnapwebapi.azurewebsites.net/api/values", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(picture.base64)
+      body: JSON.stringify(img.base64)
     })
       .then(
         response => {this.setState({isSendingReceipt: false}); return response.json()},

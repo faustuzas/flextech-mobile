@@ -15,11 +15,7 @@ import {
   Button
 } from "native-base";
 import {
-  Ionicons,
-  MaterialIcons,
-  Foundation,
   MaterialCommunityIcons,
-  Octicons
 } from "@expo/vector-icons";
 
 const SingleReceiptItem = props => {
