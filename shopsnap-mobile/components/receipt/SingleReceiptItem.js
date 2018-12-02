@@ -30,7 +30,7 @@ const SingleReceiptItem = props => {
         <Text>{props.receiptItem.Name}</Text>
       </Body>
       <Right>
-          <Text>{`${props.receiptItem.Quantity} ${props.receiptItem.Quantity > 50 ? 'g' : ''}x${props.receiptItem.Price}€`}</Text>
+          <Text>{`${props.receiptItem.Quantity}${props.receiptItem.Quantity > 50 ? 'g' : ''} x ${props.receiptItem.Price}€`}</Text>
       </Right>
     </ListItem>
   );

@@ -7,8 +7,8 @@ import { withNavigationFocus } from "react-navigation";
 import Dialog, {
   DialogTitle,
   DialogContent,
-  DialogButton,
-} from 'react-native-popup-dialog';
+  DialogButton
+} from "react-native-popup-dialog";
 
 import {
   Alert,
@@ -35,11 +35,7 @@ import {
   BarCodeScanner,
   Notifications
 } from "expo";
-import {
-  Text,
-  Picker,
-  Form
-} from "native-base";
+import { Text, Picker, Form } from "native-base";
 import { CameraLayover } from "../components/CameraLayover";
 
 class CameraScreen extends React.Component {
@@ -48,9 +44,7 @@ class CameraScreen extends React.Component {
   };
 
   render() {
-    return (
-      <CustomCamera isScreenFocused={this.props.isFocused} />
-    );
+    return <CustomCamera isScreenFocused={this.props.isFocused} />;
   }
 }
 
@@ -78,7 +72,6 @@ class CustomCamera extends React.Component {
   }
 
   confirmItems = () => {
-
     const data = JSON.stringify({
       StoreID: 3,
       Date: "2018-12-01",
@@ -94,18 +87,28 @@ class CustomCamera extends React.Component {
       },
       body: data
     })
-      .then(res => console.log(data))
-      .catch(err => console.log(err));
+      .then(res => {
+        this.setState({ confirmDialog: false });
+        console.log(data);
+      })
+      .catch(err => {
+        this.setState({ confirmDialog: false });
+        console.log(err);
+      });
   };
 
   processPicture = async picture => {
     this.setState({ isSendingReceipt: true });
     const saveOptions = {
       compress: 0.7,
-      format: 'jpeg',
+      format: "jpeg",
       base64: true
     };
-    const img = await Expo.ImageManipulator.manipulateAsync(picture.uri, [], saveOptions);
+    const img = await Expo.ImageManipulator.manipulateAsync(
+      picture.uri,
+      [],
+      saveOptions
+    );
     console.log(img.base64.length);
     fetch("https://shopsnapwebapi.azurewebsites.net/api/values", {
       method: "POST",
@@ -115,7 +118,10 @@ class CustomCamera extends React.Component {
       body: JSON.stringify(img.base64)
     })
       .then(
-        response => {this.setState({isSendingReceipt: false}); return response.json()},
+        response => {
+          this.setState({ isSendingReceipt: false });
+          return response.json();
+        },
         ex => {
           console.log("catch in processPicture after fetch");
           //this.showErrorPopup(String(ex));
@@ -178,9 +184,11 @@ class CustomCamera extends React.Component {
         <View style={styles.bottomBar}>
           <View style={{ flex: 1 }}>
             <ActivityIndicator
-              style={{     flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 20 }}
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+                padding: 20
+              }}
               size="large"
               color="white"
             />
@@ -188,7 +196,7 @@ class CustomCamera extends React.Component {
         </View>
       );
     }
-    
+
     return (
       <View style={styles.bottomBar}>
         <View style={{ flex: 1 }}>
@@ -236,7 +244,7 @@ class CustomCamera extends React.Component {
               <DialogTitle
                 title="Nuskenuota"
                 style={{
-                  backgroundColor: '#F7F7F8',
+                  backgroundColor: "#F7F7F8"
                 }}
                 hasTitleBar={false}
                 align="left"
@@ -253,23 +261,22 @@ class CustomCamera extends React.Component {
               <DialogButton
                 text="Gerai"
                 onPress={() => {
-                  this.setState({ confirmDialog: false });
                   this.confirmItems();
                 }}
                 key="button-2"
-              />,
+              />
             ]}
           >
             <DialogContent
               style={{
-                backgroundColor: '#F7F7F8',
+                backgroundColor: "#F7F7F8"
               }}
             >
-              { this.state.itemsRead.map(item => (
+              {this.state.itemsRead.map(item => (
                 <View>
                   <Text>{item.Name}</Text>
                 </View>
-              )) }
+              ))}
             </DialogContent>
           </Dialog>
         </View>
