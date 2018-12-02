@@ -15,6 +15,7 @@ export default class HomeScreen extends Component {
   };
 
   componentDidFocus = payload => {
+    this.setState({isFetchingReceipts: true});
     fetch("https://shopsnapwebapi.azurewebsites.net/api/receipt/?userID=1", {
       method: "GET",
       headers: {
