@@ -71,7 +71,7 @@ class CustomCamera extends React.Component {
 
   processPicture = picture => {
     this.setState({ isSendingReceipt: true });
-    fetch("https://epicentertop.azurewebsites.net/api", {
+    fetch("https://shopsnapwebapi.azurewebsites.net/api/values", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -79,12 +79,13 @@ class CustomCamera extends React.Component {
       body: JSON.stringify(picture.base64)
     })
       .then(
-        response => undefined,
+        response => {this.setState({isSendingReceipt: false}); return response.json()},
         ex => {
           console.log("catch in processPicture after fetch");
           //this.showErrorPopup(String(ex));
         }
-      );
+      )
+      .then(jsonResponse => console.log(jsonResponse));
   };
 
   showPopup = message => {
@@ -119,7 +120,7 @@ class CustomCamera extends React.Component {
       })
       .catch(error => {
         console.log("takepicture catch");
-        this.showErrorPopup(String(error));
+        //this.showErrorPopup(String(error));
       });
     this.setState({
       foo: Math.random()
