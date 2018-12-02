@@ -19,9 +19,7 @@ import {
 const SingleReceipt = props => (
   <Ripple rippleColor="gray" rippleContainerBorderRadius={1} rippleOpacity={0.3}
   onPress={() => {
-    console.log("SINGLERECEIPT");
-    console.log(props.receipt.ReceiptItems);
-    props.navigation.navigate('Receipt', {receiptItems: props.receipt.receiptItems})}
+    props.navigation.navigate('Receipt', {receiptItems: props.receipt.ReceiptItems})}
     }>
   <ListItem thumbnail >
     <Left>

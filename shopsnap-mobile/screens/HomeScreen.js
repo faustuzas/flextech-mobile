@@ -22,6 +22,7 @@ export default class HomeScreen extends Component {
       .then(
         response => response.json(),
         ex => {
+          console.log("receipt fetch fail");
           //this.showErrorPopup(String(ex));
         }
       )
