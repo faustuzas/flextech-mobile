@@ -4,6 +4,12 @@ import NotificationPopup from "react-native-push-notification-popup";
 
 import { withNavigationFocus } from "react-navigation";
 
+import Dialog, {
+  DialogTitle,
+  DialogContent,
+  DialogButton,
+} from 'react-native-popup-dialog';
+
 import {
   Alert,
   StyleSheet,
@@ -30,17 +36,6 @@ import {
   Notifications
 } from "expo";
 import {
-  Container,
-  Card,
-  CardItem,
-  Body,
-  Content,
-  Header,
-  Left,
-  Right,
-  Icon,
-  Title,
-  Button,
   Text,
   Picker,
   Form
@@ -53,7 +48,9 @@ class CameraScreen extends React.Component {
   };
 
   render() {
-    return <CustomCamera isScreenFocused={this.props.isFocused} />;
+    return (
+      <CustomCamera isScreenFocused={this.props.isFocused} />
+    );
   }
 }
 
@@ -62,7 +59,9 @@ class CustomCamera extends React.Component {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
     isSendingReceipt: false,
-    selectedStore: ""
+    selectedStore: "",
+    confirmDialog: false,
+    itemsRead: []
   };
 
   onValueChange(value) {
@@ -77,6 +76,27 @@ class CustomCamera extends React.Component {
       hasCameraPermission: permissions[Permissions.CAMERA].status === "granted"
     });
   }
+
+  confirmItems = () => {
+
+    const data = JSON.stringify({
+      StoreID: 3,
+      Date: "2018-12-01",
+      UserID: 1,
+      ReceiptFoundItemList: this.state.itemsRead
+    });
+
+    console.log(data);
+    fetch("https://shopsnapwebapi.azurewebsites.net/api/receipt/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: data
+    })
+      .then(res => console.log(data))
+      .catch(err => console.log(err));
+  };
 
   processPicture = async picture => {
     this.setState({ isSendingReceipt: true });
@@ -101,7 +121,12 @@ class CustomCamera extends React.Component {
           //this.showErrorPopup(String(ex));
         }
       )
-      .then(jsonResponse => console.log(jsonResponse));
+      .then(jsonResponse => {
+        this.setState({
+          confirmDialog: true,
+          itemsRead: jsonResponse || []
+        });
+      });
   };
 
   showPopup = message => {
@@ -200,6 +225,53 @@ class CustomCamera extends React.Component {
             </View>
           </Camera>
           <NotificationPopup ref={ref => (this.popup = ref)} />
+          <Dialog
+            onDismiss={() => {
+              this.setState({ confirmDialog: false });
+            }}
+            width={0.9}
+            visible={this.state.confirmDialog}
+            rounded
+            dialogTitle={
+              <DialogTitle
+                title="Nuskenuota"
+                style={{
+                  backgroundColor: '#F7F7F8',
+                }}
+                hasTitleBar={false}
+                align="left"
+              />
+            }
+            actions={[
+              <DialogButton
+                text="Kartoti"
+                onPress={() => {
+                  this.setState({ confirmDialog: false });
+                }}
+                key="button-1"
+              />,
+              <DialogButton
+                text="Gerai"
+                onPress={() => {
+                  this.setState({ confirmDialog: false });
+                  this.confirmItems();
+                }}
+                key="button-2"
+              />,
+            ]}
+          >
+            <DialogContent
+              style={{
+                backgroundColor: '#F7F7F8',
+              }}
+            >
+              { this.state.itemsRead.map(item => (
+                <View>
+                  <Text>{item.Name}</Text>
+                </View>
+              )) }
+            </DialogContent>
+          </Dialog>
         </View>
       );
     }
