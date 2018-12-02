@@ -14,13 +14,20 @@ import {
   Switch,
   Button
 } from "native-base";
+import {
+  Ionicons,
+  MaterialIcons,
+  Foundation,
+  MaterialCommunityIcons,
+  Octicons
+} from "@expo/vector-icons";
 
 const SingleReceiptItem = props => {
   return (
     <ListItem icon>
       <Left>
         <Button style={{ backgroundColor: "#FF9501" }}>
-          <Icon active name="ios-airplane" />
+          <MaterialCommunityIcons name="food-fork-drink" />
         </Button>
       </Left>
       <Body>
